@@ -1,0 +1,148 @@
+
+---FTPLUGIN TODO---
+
+   6/3/2011   Bind a key that does [i and [I
+
+
+---INDENT TODO---
+---INDENT TODO---
+---INDENT TODO---
+
+
+        9.) 9/22/2011  Last line with just the closing paren should align
+        with the start of the function name (a little after the :=) instead
+        of the start of the line:
+                       
+
+                for $e in $all-curr-scenario-entities
+                let $entity := util:default-if-empty(
+                                 xs:string($e/@rt:entity), 
+                                 $RFETrack:DEFAULT-ENTITY
+                )
+
+        8.) 8/23/2011   For some reason the 'else' here isn't aligning right.  (without the parens it works
+
+
+          if(PermissionsManager:is-admin()) then (
+            $stuff-to-show-to-PM
+          )
+            else (
+              $stuff-to-show-otherwise
+            )
+
+
+        7.) 7/20/2011   The first line of the comment here indents, when it should indent -1
+
+        declare variable $ranked-scenario-rfe-ids := (
+
+      (: filter out all ranked scenario rfes that have been either pushed 
+   : to bugtrack already, or aren't 'new' or 'reviewed'
+   :)
+
+
+        6.)  The 'return' after the eval-q string aligns to previous keyword,
+             but shouldn't since it's in a string!
+
+            let $eval-q := "
+                declare namespace rt = 'http://marklogic.com/rfetrack';
+                declare variable $rt:entity as xs:string external;
+                declare variable $rt:id as xs:string? external;
+                declare variable $rt:entity-source as element() external;
+
+                xdmp:node-insert-child(
+                    $rt:entity-source,
+                    element { $list-element-name } { 
+                        element { $list-item-element-name } { $rt:entry-value }
+                    }
+                )
+
+            "
+                return
+                  xdmp:eval($eval-q, (
+                    xs:QName("rt:entity"), $rt:entity,
+                    xs:QName("rt:id"), $rt:id,
+                    xs:QName("rt:entity-source"), RFEManager:get($rt:entity, $rt:entity-id)
+                  ))
+
+        5.) It thinks its in unction declaration on the last line here...  397
+
+                  declare function RFETrack:compute-dateformat-options-from-settings(
+                    $datetime-item as item()?
+                  ) as xs:string*
+                  {
+                    if(fn:empty($datetime-item)) then (
+
+                    )
+                  else 
+
+        4.)  It thinks the 4th line here is a line-wrapped-if-statement 
+             line 296
+
+                let $entity := RFEManager:get($entity, $entity-id)
+                let $comments-local-name :=
+                if($entity = $RFETrack:ENTITY-RFE) then "rt:notes" else "rt:comments"
+                    let $comments := RFEManager:get($entity, $entity-id)
+
+        3.)  5/18/2011   The second return here dosent autoindent!
+
+            let $email-name-map := (
+              let $mp := map:map() 
+              let $_put := (
+
+              )
+              return $mp
+            )
+              return 
+
+
+        2.) 5/16/2011  This line autoindents because of the comma, but should
+        be indented one &sw to the right...
+
+          xdmp:node-replace($field/rt:parameters, 
+          element rt:parameters
+
+
+        1.)  4/15/2011  The let here after the computed constructor indents to 'element'
+             instead of the let 
+
+            declare function local:make-source-of-file(
+                $repository-name as xs:string,
+                $full-file-path as xs:string 
+            )
+            {
+                let $source-element := 
+                    element ham:source {
+                        element ham:repository-name { $repository-name },
+                        element ham:full-file-path { $full-file-path },
+                        element ham:extension { local:parse-extension($full-file-path) },
+                        element ham:created { fn:current-dateTime() },
+                        element ham:raw { 
+                            ham:get-raw-source($repository-name, $full-file-path)
+                        }
+                    }
+                    return 
+            };
+
+        i. 3/31/2011   The anchor on the last line shouldn't autoindent
+
+            <form action="" method="post">
+                <input type="url" placeholder="The SVN URL"
+                    name="{$ML-SVN-URL}" value="{$DEFAULT-SVN-URL}"/>
+                    <a href 
+
+
+        21) 3/4/2011   The second line currently autoindents because the first
+                       ends with a comma:
+                      
+          fn:concat("somestring", 
+          $foo:bar-variable ,"=" , xdmp:url-encode($baz) ) 
+
+        17) Seems like with 0} in 'indentkeys', and with cursor positioned
+        one line 3 below just before the <,  it dosent indent correctly
+        when you type }.  It works though if you ==
+
+          1     <blah>{ 
+          2 
+          3   }</blah>
+
+

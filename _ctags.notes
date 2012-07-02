@@ -1,0 +1,29 @@
+
+
+Good reference info
+
+--------------------------------------------------------------------------------
+
+http://ctags.sourceforge.net/ctags.html
+
+http://vim-taglist.sourceforge.net/extend.html
+
+
+---------------------------------------------------------------------------------
+
+for regex info  (it uses POSIX regexes or watever):
+
+    man egrep
+
+
+    info regex
+
+
+
+
+------------
+
+
+originally xquery ctags things was just one line:
+
+--regex-xquery=/^(declare|define) function[ \t]*([_a-zA-Z0-9:-]+)/\2/f,function/

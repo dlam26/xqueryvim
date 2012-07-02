@@ -1,0 +1,52 @@
+HOWTO VIMSCRIPT
+
+11/22/2010
+
+:h debug-scripts
+
+:h usr_41       (How to Write a Vim script)
+
+
+<lamdk> is there a key to paste the value of some setting into the buffer?
+	like the function name in 'set indentexpr?'
+<jamessan> lamdk: :help expr-option
+<MarcWeber> lamdk: <c-r>=vim-expr
+
+=======================================================
+=======================================================
+
+
+Q. How do I log a message to debug a script?   (from $VIMRUNTIME/indent/GenericIndent.vim)
+A. 
+    Using the Ex command 'echomsg' 
+
+    -->    echomsg "Here" . " is a cool message"
+
+    echo &indentexpr
+
+
+
+Q. How do I insert text into the buffer?
+A. 
+    Using setline(lnum, text)
+
+    Ex.  call setline(line('.'), "abc123")
+       
+         call setline(line('.'), &tabstop)
+
+
+Q. How do I get the line ***NUMBER*** the cursor is currently on?
+A. line('.')
+
+
+Q. How do I get the line ***TEXT*** the cursor is currently on?
+A. getline('.')
+
+
+Q. Get the syntax name of the thing at the cursor?
+A. echo synIDattr(synID(line("."), col("."), 1), "name")
+
+Q. How do I see all vimscript builtin functions?
+A. 
+    :h functions
+    :h function-list
