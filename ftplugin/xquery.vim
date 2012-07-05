@@ -190,4 +190,7 @@ let b:undo_ftplugin = 'setlocal formatoptions<'
         \  . ' shiftwidth< tabstop<' 
 
 
+" surround.vim    Usage: visually select text, then type Sc 
+let b:surround_{char2nr("c")} = "(: \r :)"
+
 " vim:sw=4 fdm=marker tw=80
