@@ -2,7 +2,7 @@
 " Language:     XQuery
 " Maintainer:   David Lam <dlam@dlam.me>
 " Created:      2010 May 27
-" Last Change:  2012 July 4
+" Last Change:  2012 Oct 8
 "
 " Notes:
 "   Completes W3C XQuery 'fn' functions, types and keywords. 
@@ -1677,10 +1677,54 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
 
     let all_types = generic_types + atomic_types
 
+    " Derived from using _ctags options to generate tags from MarkLogic6
+    " geospatial completion function names {{{
+    " let COMMON_geospatial_functions {{{
+    let COMMON_geospatial_functions = [
+        \ 'geospatial-query',
+        \ 'geospatial-query',
+        \ 'geospatial-query-from-elements',
+        \ 'geospatial-query-from-elements',
+        \ 'point',
+        \ 'circle',
+        \ 'box',
+        \ 'polygon'
+        \ ]
+    " }}}
+
+    let geo_functions = [ ]
+    let all_geo_functions =
+        \ COMMON_geospatial_functions + geo_functions
+
+    let georss_functions = [ ]
+    let all_georss_functions =
+        \ COMMON_geospatial_functions + georss_functions
+
+    let gml_functions = [
+        \ 'DEFAULT-WEIGHT',
+        \ 'interior-polygon'
+        \ ]
+    let all_gml_functions =
+        \ COMMON_geospatial_functions + gml_functions
+
+    let kml_functions = [
+        \ 'DEFAULT-WEIGHT',
+        \ 'interior-polygon'
+        \ ]
+    let all_kml_functions =
+        \ COMMON_geospatial_functions + kml_functions
+
+
+    let mcgm_functions = [
+        \ 'DEFAULT-WEIGHT'
+        \ ]
+    let all_mcgm_functions =
+        \ COMMON_geospatial_functions + mcgm_functions
+    "}}}
 
     " 8/3/2010  leaving out XInclude stuff intentionally...
 
-    " TODO add option to include geospatial completions!
+    " Added function names from MarkLogic6 above - 10/8/2012
     let geospatial_namespaces       = ["geo", "georss", "gml", "kml", "mcgm"]
 
     let library_modules_namespaces  = ["admin", "alert", "dls", "entity", "exsl", "functx", "pki", "search", "sec", "spell", "thsr", "trgr", "ooxml"]
@@ -1695,7 +1739,8 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
         \ library_modules_namespaces +
         \ cpf_function_namespaces +
         \ builtin_function_namespaces +
-        \ predeclared_namespaces
+        \ predeclared_namespaces +
+        \ geospatial_namespaces
 
     "  When completing a namespace, the user will almost 
     "  always want the colon after it too!
@@ -1732,6 +1777,21 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
     elseif namespace =~ 'alert'
       call map(alertfunctions, '"alert:" . v:val . "("')
       let function_completions = copy(alertfunctions)
+    elseif namespace =~ 'georss'
+      call map(all_georss_functions, '"georss:" . v:val . "("')
+      let function_completions = copy(all_georss_functions)
+    elseif namespace =~ 'geo'
+      call map(all_geo_functions, '"geo:" . v:val . "("')
+      let function_completions = copy(all_geo_functions)
+    elseif namespace =~ 'gml'
+      call map(all_gml_functions, '"gml:" . v:val . "("')
+      let function_completions = copy(all_gml_functions)
+    elseif namespace =~ 'kml'
+      call map(all_kml_functions, '"kml:" . v:val . "("')
+      let function_completions = copy(all_kml_functions)
+    elseif namespace =~ 'mcgm'
+      call map(all_mcgm_functions, '"mcgm:" . v:val . "("')
+      let function_completions = copy(all_mcgm_functions)
     elseif namespace =~ 'xs'
       let function_completions = atomic_types
     endif
