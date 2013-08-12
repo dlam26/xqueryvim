@@ -801,6 +801,22 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
         \ 'spawn-matching-actions']
         "}}}
 
+    " let cpffunctions = ["{{{
+    " 2013-08-12 http://http://docs.marklogic.com/cpf
+    let all_cpffunctions = [
+        \ 'check-transition',
+        \ 'document-get-error',
+        \ 'document-get-last-updated',
+        \ 'document-get-processing-status',
+        \ 'document-get-state',
+        \ 'document-set-error',
+        \ 'document-set-last-updated',
+        \ 'document-set-processing-status',
+        \ 'document-set-state',
+        \ 'failure',
+        \ 'success']
+    "}}}
+
     " http://community.marklogic.com/pubs/5.0/apidocs/Classifier.html
     let cts_classifier_functions = ['classify', 'thresholds', 'train']
 
@@ -1762,6 +1778,9 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
     elseif namespace =~ 'cts'
       call map(all_ctsfunctions, '"cts:" . v:val . "("')
       let function_completions = copy(all_ctsfunctions)
+    elseif namespace =~ 'cpf'
+      call map(all_cpffunctions, '"cpf:" . v:val . "("')
+      let function_completions = copy(all_cpffunctions)
     elseif namespace =~ 'functx'
       call map(functxFunctions, '"functx:" . v:val . "("')
       let function_completions = copy(functxFunctions)
