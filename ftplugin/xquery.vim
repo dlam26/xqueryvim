@@ -1,7 +1,7 @@
 " Vim filetype plugin file
 " Language:	    XQuery
 " Maintainer:	David Lam <dlam@dlam.me>
-" Last Change:  2011 Jun 2
+" Last Change:  2020 Mar 17
 "
 " Notes: 
 "    -Makes keys like gd and <C-]> work better when editing XQuery files 
@@ -23,10 +23,10 @@
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
 "  finish
-   delfunction xqueryft:XQueryTag
-   delfunction xqueryft:XQueryGotoDeclaration
-   delfunction xqueryft:Star
-   delfunction xqueryft:BracketI
+   delfunction XQueryTag
+   delfunction XQueryGotoDeclaration
+   delfunction Star
+   delfunction BracketI
 endif
 let b:did_ftplugin = 1
 
@@ -40,8 +40,8 @@ inoremap <C-c> <C-c>:set isk-=-<cr>
 "           to the buffer you made the jump in via i_Ctrl-T or i_Ctrl-O or something
 autocmd BufEnter *.xqy,*.xql,*.xqe,*.xq set iskeyword-=-   
 
-if !exists("*xqueryft:XQueryTag")
-    function! xqueryft:XQueryTag(is_tjump)
+if !exists("*XQueryTag")
+    function! XQueryTag(is_tjump)
      
       set iskeyword+=-
 
@@ -81,8 +81,8 @@ endif
 "  :h gd     
 "  :h searchdecl()     searchdecl(expand("<cword>"), 0, 0)
 "
-if !exists("*xqueryft:XQueryGotoDeclaration")
-    function! xqueryft:XQueryGotoDeclaration(is_goto_global)
+if !exists("*XQueryGotoDeclaration")
+    function! XQueryGotoDeclaration(is_goto_global)
       set iskeyword+=- | let @/='\<'.expand('<cword>').'\>' | set iskeyword-=- 
 
       if a:is_goto_global
@@ -98,8 +98,8 @@ if !exists("*xqueryft:XQueryGotoDeclaration")
 endif
 
 
-if !exists("*xqueryft:Star")
-    function! xqueryft:Star(goforward)
+if !exists("*Star")
+    function! Star(goforward)
         set iskeyword+=- | let @/='\<'.expand('<cword>').'\>' | set iskeyword-=- 
         if a:goforward
             normal! n 
@@ -109,9 +109,9 @@ if !exists("*xqueryft:Star")
     endfunction
 endif
 
-if !exists("*xqueryft:BracketI")
+if !exists("*BracketI")
 
-    function! xqueryft:BracketI(iscapital)
+    function! BracketI(iscapital)
         set iskeyword+=- 
 
         " TODO  find function equivalent for [i and [I 
@@ -126,24 +126,24 @@ endif
 " Add mappings, unless the user didn't want this.
 if !exists("no_plugin_maps") && !exists("no_mail_maps")
 
-    if !hasmapto('xqueryft:XQueryTag')
-        noremap <buffer> <C-]> :call xqueryft:XQueryTag(0)<CR>
-        noremap <buffer> g<C-]> :call xqueryft:XQueryTag(1)<CR>
+    if !hasmapto('XQueryTag')
+        noremap <buffer> <C-]> :call XQueryTag(0)<CR>
+        noremap <buffer> g<C-]> :call XQueryTag(1)<CR>
     endif
 
-    if !hasmapto('xqueryft:XQueryGotoDeclaration')
-        noremap <buffer> gd :call xqueryft:XQueryGotoDeclaration(0)<CR>
-        noremap <buffer> gD :call xqueryft:XQueryGotoDeclaration(1)<CR> 
+    if !hasmapto('XQueryGotoDeclaration')
+        noremap <buffer> gd :call XQueryGotoDeclaration(0)<CR>
+        noremap <buffer> gD :call XQueryGotoDeclaration(1)<CR> 
     endif
 
-    if !hasmapto('xqueryft:Star')
-        noremap <buffer> # :call xqueryft:Star(0)<CR>
-        noremap <buffer> * :call xqueryft:Star(1)<CR>
+    if !hasmapto('Star')
+        noremap <buffer> # :call Star(0)<CR>
+        noremap <buffer> * :call Star(1)<CR>
     endif
 
-"     if !hasmapto('xqueryft:BracketI')
-"         noremap <buffer> [i :call xqueryft:BracketI(0)<CR>
-"         noremap <buffer> [I :call xqueryft:BracketI(1)<CR>
+"     if !hasmapto('BracketI')
+"         noremap <buffer> [i :call BracketI(0)<CR>
+"         noremap <buffer> [I :call BracketI(1)<CR>
 "     endif
 
 endif

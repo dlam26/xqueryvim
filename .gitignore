@@ -1,0 +1,7 @@
+indent/test/*.out
+indent/test/*.diff
+indent/test/RESULTS
+
+# vi files
+*.un*
+*.s[a-z][a-z]
